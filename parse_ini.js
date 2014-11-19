@@ -8,7 +8,7 @@ if (!fileToOpen) {
 }
 
 var fileSplit = fileToOpen.split('.'),
-	parser = require('./Parser.js'),
+	parser = require('./parser.js'),
 	isUrl =  function(string) {
 		return string.substring(0, 7) === 'http://';
 	};
