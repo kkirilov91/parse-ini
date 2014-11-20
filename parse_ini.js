@@ -8,11 +8,8 @@ if (!fileToOpen) {
 }
 
 var fileSplit = fileToOpen.split('.'),
-	parser = require('./parser.js'),
-	isUrl =  function(string) {
-		return string.substring(0, 7) === 'http://';
-	};
-fileExtention = fileSplit[fileSplit.length-1];
+	parser = require('./parser.js');
+fileExtention = fileSplit[fileSplit.length - 1];
 
 if (isUrl(fileToOpen)) {
 	var http = require('http'),
@@ -21,21 +18,21 @@ if (isUrl(fileToOpen)) {
 			host: fileToOpen
 		};
 
-		http.request(options, function(response) {
-			response.on('data', function(data) {
-				if (fileExtention === 'ini') {
-					convertedFile = parser.convertIniToJson(data);
-				} else if (fileExtention === 'json') {
-					convertedFile = parser.convertJsonToIni(data);
-				}
-			})
-		}).end();
+	http.request(options, function(response) {
+		response.on('data', function(data) {
+			if (fileExtention === 'ini') {
+				convertedFile = parser.convertIniToJson(data);
+			} else if (fileExtention === 'json') {
+				convertedFile = parser.convertJsonToIni(data);
+			}
+		})
+	}).end();
 } else {
 	var fs = require('fs');
-	fs.readFile(fileToOpen, 'utf8', function (err, data) {
-		if(err) {
+	fs.readFile(fileToOpen, 'utf8', function(err, data) {
+		if (err) {
 			throw err;
-		}		
+		}
 
 		if (fileExtention === 'ini') {
 			convertedFile = parser.parseIniToJson(data);
@@ -45,5 +42,8 @@ if (isUrl(fileToOpen)) {
 
 		console.log(convertedFile);
 	})
-}
+};
 
+function isUrl(string) {
+	return string.substring(0, 7) === 'http://';
+}
