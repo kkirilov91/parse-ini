@@ -7,6 +7,7 @@ if (!fileToOpen) {
 	throw 'No argument found.';
 }
 
+//TODO: ITS stupid, to do it that wy, but it is faster for me упрей гу
 var fileSplit = fileToOpen.split('.'),
 	parser = require('./Parser.js'),
 	isUrl =  function(string) {
@@ -15,13 +16,15 @@ var fileSplit = fileToOpen.split('.'),
 fileExtention = fileSplit[fileSplit.length-1];
 
 if (isUrl(fileToOpen)) {
+	console.log('dasdsad')
 	var http = require('http'),
 		options = {
 			method: 'GET',
-			host: fileToOpen
+			host: 'http://ip.jsontest.com/'
 		};
 
 		http.request(options, function(response) {
+			console.log(response);
 			response.on('data', function(data) {
 				if (fileExtention === 'ini') {
 					convertedFile = parser.convertIniToJson(data);
